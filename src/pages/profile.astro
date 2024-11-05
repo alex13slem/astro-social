@@ -1,0 +1,11 @@
+---
+import BaseLayout from '@/components/layouts/base-layout.astro';
+import type { User } from '@supabase/supabase-js';
+const user = Astro.locals.user as User;
+const userInfo = Astro.locals.userInfo;
+const fullName = userInfo?.full_name || user.user_metadata.username;
+---
+
+<BaseLayout title={fullName}>
+  <h1>{fullName}</h1>
+</BaseLayout>

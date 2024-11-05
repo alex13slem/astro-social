@@ -1,0 +1,66 @@
+---
+import '@/style.css';
+import Header from './header.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Social Network',
+  ogImage = 'https://astro.build/social.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Scripts -->
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"
+    ></script>
+
+    <!-- CSS -->
+    <link
+      href="
+    https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css
+    "
+      rel="stylesheet"
+    />
+
+    <!-- OG Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="description" content={description} />
+    <title>Social Network | {title}</title>
+  </head>
+  <body>
+    <Header />
+    <slot />
+  </body>
+</html>
+
+<style>
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100svh;
+
+    background-color: var(--bg-body);
+    color: var(--c-text);
+  }
+</style>

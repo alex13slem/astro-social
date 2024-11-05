@@ -1,0 +1,235 @@
+---
+const user = Astro.locals.user;
+const userInfo = Astro.locals.userInfo;
+const fullName = userInfo?.full_name || user?.user_metadata.username;
+
+if (user && !fullName) {
+  return Astro.rewrite('/oops');
+}
+---
+
+<header>
+  <div class="container">
+    <a href="/" class="logo"> LOGO </a>
+
+    <div class="center-bar">
+      <!-- {
+        !!user && (
+          <form class="form-search" action="">
+            <input type="search" placeholder="Search" />
+            <button class="btn-search">
+              <iconify-icon icon="material-symbols:search" />
+            </button>
+          </form>
+        )
+      } -->
+    </div>
+
+    {
+      user ? (
+        <details class="main">
+          <summary class="header-btn">
+            {userInfo?.avatar_url ? (
+              <img src={userInfo.avatar_url} alt={fullName} />
+            ) : (
+              <iconify-icon class="user-icon" icon="guidance:user-1" />
+            )}
+          </summary>
+          <nav>
+            <details class="sub-main">
+              <summary>
+                Настройки
+                <iconify-icon
+                  class="nav-arrow"
+                  icon="material-symbols:arrow-right"
+                />
+              </summary>
+              <nav>
+                <a href="">Личная информация</a>
+                <hr />
+                <a href="">Сменить пароль</a>
+              </nav>
+            </details>
+            <hr />
+            <button type="button" onclick="window.exitModal.showModal()">
+              Выйти
+            </button>
+            <dialog id="exitModal">
+              <h2>Вы уверены, что хотите выйти?</h2>
+              <footer>
+                <form action="/api/auth/logout" method="POST">
+                  <button>Выйти</button>
+                </form>
+                <form method="dialog">
+                  <button>Отмена</button>
+                </form>
+              </footer>
+            </dialog>
+          </nav>
+        </details>
+      ) : (
+        <a href="/login" class="header-btn" title="Вход">
+          <iconify-icon icon="uiw:login" />
+        </a>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  button,
+  summary {
+    cursor: pointer;
+  }
+  input {
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  header {
+    background-color: var(--bg-header);
+    border-bottom: thin solid var(--c-border);
+    & .container {
+      display: flex;
+      gap: 1rem;
+
+      justify-content: space-between;
+      align-items: center;
+    }
+    & .center-bar {
+      flex: 1;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: end;
+    }
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  details {
+    position: relative;
+    transition: color 0.1s;
+    &[open] {
+      &:is(.main) {
+        color: #ffffffcc;
+      }
+      &:is(.sub-main) {
+        color: #000000dd;
+      }
+      & nav {
+        opacity: 1;
+      }
+
+      & > summary {
+        background-color: #ffffff33;
+      }
+    }
+
+    &:is(.main) {
+      nav {
+        top: calc(100% + 0.25rem);
+        left: 0;
+      }
+      & > summary {
+        gap: 0.5rem;
+      }
+    }
+    &:is(.sub-main) {
+      nav {
+        top: -0.5rem;
+        left: calc(100% + 0.75rem);
+      }
+      & > summary {
+        gap: 0.1rem;
+      }
+    }
+
+    & nav {
+      width: max-content;
+      font-size: 0.8rem;
+      background-color: #ffffffee;
+      color: #00000099;
+      position: absolute;
+
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: thin solid #00000099;
+      opacity: 0;
+      transition: opacity 0.1s;
+
+      & > button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .nav-arrow {
+    font-size: 1rem;
+  }
+  summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+  .btn-search {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem;
+    font-size: x-large;
+    color: #00000099;
+  }
+  .form-search {
+    display: flex;
+  }
+
+  .header-btn {
+    height: 3rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    padding-inline: 0.5rem;
+    transition: background-color 0.1s ease-in-out;
+    &:hover,
+    &:focus-visible {
+      background-color: #ffffff33;
+    }
+  }
+
+  dialog {
+    padding: 2rem 1rem 1rem;
+    border: thin solid #00000099;
+    border-radius: 0.5rem;
+    & h2 {
+      font-size: larger;
+    }
+    & footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: end;
+      gap: 0.5rem;
+    }
+  }
+</style>

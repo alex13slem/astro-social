@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'form'> {}
+const { ...attrs } = Astro.props;
+---
+
+<form {...attrs}>
+  <slot />
+</form>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+</style>

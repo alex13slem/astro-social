@@ -1,0 +1,42 @@
+---
+import AuthPage from '@/components/layouts/auth-page.astro';
+import FormLogin from '@/components/lvl2/forms/form-login.astro';
+import bg from '../assets/img/login-decor.png';
+---
+
+<AuthPage title="Вход" image={bg}>
+  <div class="root">
+    <div class="island">
+      <h1>Вход</h1>
+      <FormLogin />
+    </div>
+    <div class="island">
+      <p class="no-account">
+        Нет аккаунта? <a href="/registration">Регистрация</a>
+      </p>
+    </div>
+  </div>
+</AuthPage>
+
+<style>
+  .root {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .island {
+    border-radius: 0.75rem;
+    background-color: var(--c-bg-island);
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: xx-large;
+    margin-bottom: 2rem;
+  }
+
+  .no-account {
+    text-align: center;
+  }
+</style>

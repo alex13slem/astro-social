@@ -1,0 +1,17 @@
+:root {
+  --c-bg-island: #fff;
+  --bg-header: var(--c-bg-island);
+  --c-border: #e7e8ec;
+  --bg-body: #edeef0;
+  --c-text: #141414;
+  --c-accent: #447bba;
+  --bg-input: #f0f2f5;
+
+  @media (prefers-color-scheme: dark) {
+    --c-bg-island: #222;
+    --bg-body: #141414;
+    --c-border: #292929;
+    --c-text: #e1e3e6;
+    --bg-input: #333;
+  }
+}

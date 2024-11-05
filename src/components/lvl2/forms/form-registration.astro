@@ -1,0 +1,10 @@
+---
+import AuthForm from '@/components/lvl1/forms/auth-form.astro';
+---
+
+<AuthForm class="form" action="/api/auth/registration" method="POST">
+  <input type="text" name="username" placeholder="Имя пользователя" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="password" name="password" placeholder="Пароль" required />
+  <button type="submit">Зарегистрироваться</button>
+</AuthForm>
